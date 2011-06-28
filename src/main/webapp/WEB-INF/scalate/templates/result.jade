@@ -1,12 +1,13 @@
--@ import val r:(String,String,String,String)
+-@ import val detail:(String,String)
+-@ import val score:List[String]
 p
   table(border="1" cellspacing="2" cellpadding="1")
     tr
       th ID Number
-      td = r._1
+      td = detail._1
     tr
       th Name
-      td = r._2
+      td = detail._2
     tr
       th Test Date
       td 20 Jun 2021
@@ -19,16 +20,41 @@ p
       th Number of Applicants
     tr
       th Quantitative
-      td {{s}}
-      td {{r}}
+      td = score(8)
+      td = score(9)
       td 555
     tr
       th Verbal
-      td {{s}}
-      td {{r}}
+      td = score(10)
+      td = score(11)
       td 555
     tr
       th Equally Weighted
-      td {{s}}
-      td {{r}}
+      td = score(12)
+      td = score(13)
       td 555
+p
+  table(border="1" cellspacing="2" cellpadding="1")
+    tr
+      th
+      th(colspan="4") Number of Answers
+    tr
+      th
+      th Quantitative 1
+      th Quantitative 2
+      th Verbal 1
+      th Verbal 2
+    tr
+      th Correct
+      td = score(0)
+      td = score(1)
+      td = score(2)
+      td = score(3)
+    tr
+      th Incorrect
+      td = score(4)
+      td = score(5)
+      td = score(6)
+      td = score(7)
+p
+  a(href="javascript:history.back()") Back
