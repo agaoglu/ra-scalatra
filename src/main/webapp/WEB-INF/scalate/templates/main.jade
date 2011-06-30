@@ -3,7 +3,7 @@
 -@ val formErr:String = ""
 
 p Please enter your identification number and password
-form#query(onsubmit="sb()")
+form#query(method="post" onsubmit="sb()")
   table(border="0" cellpadding="3" cellspacing="0")
     tr
       th
@@ -15,12 +15,12 @@ form#query(onsubmit="sb()")
       th
         label(for="pass") Password
       td
-        input#pass(type="password")
+        input#pass(name="pass" type="password")
       td.err= passErr
   p
     input(type="submit")
   p.err= formErr
 :javascript
   function sb() {
-    document.getElementById('query').setAttribute("action", "/r/"+document.getElementById("idn").value+"/"+document.getElementById("pass").value);
+    document.getElementById('query').setAttribute("action", "/r/"+document.getElementById("idn").value);
   }

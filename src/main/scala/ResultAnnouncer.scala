@@ -12,11 +12,11 @@ class ResultAnnouncer extends ScalatraFilter with ScalateSupport {
     templateEngine.layout("/WEB-INF/scalate/templates/main.jade")
   }
 
-  get("/r/:idn/:pass") {
-    val r = Result of (params("idn"),params("pass"))
-    r match {
+  post("/r/:idn") {
+    val result = Result of (params("idn"),params("pass"))
+    result match {
       case Some(_) => {
-        val v = r.get
+        val v = result.get
         templateEngine.layout("/WEB-INF/scalate/templates/result.jade", Map("detail"->v._1, "score"->v._2))
       }
       case _ => templateEngine.layout("/WEB-INF/scalate/templates/main.jade", Map("formErr"->"ID Number and/or password is wrong"))
