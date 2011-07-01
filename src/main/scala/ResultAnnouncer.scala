@@ -17,9 +17,11 @@ class ResultAnnouncer extends ScalatraFilter with ScalateSupport {
     result match {
       case Some(_) => {
         val v = result.get
-        templateEngine.layout("/WEB-INF/scalate/templates/result.jade", Map("detail"->v._1, "score"->v._2))
+        templateEngine.layout(
+          "/WEB-INF/scalate/templates/result.jade", Map("detail"->v._1, "score"->v._2))
       }
-      case _ => templateEngine.layout("/WEB-INF/scalate/templates/main.jade", Map("formErr"->"ID Number and/or password is wrong"))
+      case _ => templateEngine.layout(
+        "/WEB-INF/scalate/templates/main.jade", Map("formErr"->"ID Number and/or password is wrong"))
     }
   }
 
