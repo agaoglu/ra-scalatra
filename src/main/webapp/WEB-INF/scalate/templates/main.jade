@@ -10,13 +10,11 @@ form#query(method="post" onsubmit="sb()")
         label(for="idn") ID Number
       td
         input#idn(type="text")
-      td.err= idnErr
     tr
       th
         label(for="pass") Password
       td
         input#pass(name="pass" type="password")
-      td.err= passErr
   p
     input(type="submit")
   p.err= formErr
