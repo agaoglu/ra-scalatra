@@ -1,7 +1,7 @@
 Result Announcer
 ================
 
-A simple web application to be used as a tool to announce the results of an exam. Whole scenario is summarized in [this](http://agaoglu.tumblr.com/post/3764038619/examining-the-examination-results-warm-up) post. This project runs on [scalatra](https://github.com/scalatra/scalatra), [scalate](https://github.com/scalate/scalate) and [scala-query](https://github.com/szeiger/scala-query).
+A simple web application to be used as a tool to announce the results of an exam. Whole scenario is summarized in [this](http://agaoglu.tumblr.com/post/3764038619/examining-the-examination-results-warm-up) post. This project runs on [scalatra](https://github.com/scalatra/scalatra), [scalate](https://github.com/scalate/scalate) and [scala-query](https://github.com/szeiger/scala-query). Blogged development experiences [here](http://agaoglu.tumblr.com/post/7075871849/announcing-results-with-scalatra).
 
 Building
 --------
