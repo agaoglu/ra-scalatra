@@ -10,7 +10,7 @@ object Result {
     db withSession {
       val q = for (e <- Results if e.id === id) yield e
       val data = q.first
-      if (data._3 == md5(passwd)) Some((data._1, data._2),List.fromString(data._4, '|')) else None
+      if (data._2 == md5(passwd)) Some((data._1, data._3),List.fromString(data._4, '|')) else None
     }
   }
 
