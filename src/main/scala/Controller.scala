@@ -1,17 +1,24 @@
-import org.scalaquery.session._
-import org.scalaquery.session.Database.threadLocalSession
-import org.scalaquery.ql.extended.MySQLDriver.Implicit._
+import scala.collection.mutable.Map
 
 import java.security.MessageDigest
 
 object Result {
-  val db = Database.forURL(Conf.url, driver=Conf.driver, user=Conf.user, password=Conf.password)
+  var store = Map[String, (String, String, String, String)]()
+
   def of(id:String, passwd:String) = {
-    db withSession {
-      val q = for (e <- Results if e.id === id) yield e
-      val data = q.first
-      if (data._3 == md5(passwd)) Some((data._1, data._2),List.fromString(data._4, '|')) else None
-    }
+    render(store(id), passwd)
+  }
+  
+  def render(data: (String,String,String,String), passwd: String) =
+    if (data._2 == md5(passwd)) Some((data._1, data._3),List.fromString(data._4, '|')) else None
+  
+  def preload() {
+    println("Loading db into mem")
+    for {
+        l <- scala.io.Source.fromFile("db").getLines(); 
+        val p = l.split(",").toList}
+      store += p(0) -> (p(0), p(1), p(2), p(3))
+    println("Loading - done")
   }
 
   def md5(s:String) = {
@@ -23,8 +30,5 @@ object Result {
 
 object Run {
   def main(args:Array[String]) {
-    Result.db withSession {
-      (Results.ddl) create
-    }
   }
 }

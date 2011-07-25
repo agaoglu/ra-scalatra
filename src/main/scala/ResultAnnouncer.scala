@@ -3,6 +3,11 @@ import java.net.URL
 import scalate.ScalateSupport
 
 class ResultAnnouncer extends ScalatraFilter with ScalateSupport {
+  
+  override def initialize(config: Config) = {
+    super.initialize(config)
+    Result.preload()
+  }
 
   before {
     contentType = "text/html"
@@ -13,7 +18,7 @@ class ResultAnnouncer extends ScalatraFilter with ScalateSupport {
   }
 
   post("/r/:idn") {
-    val result = Result of (params("idn"),params("pass"))
+    val result = Result of (params("idn"), params("pass"))
     result match {
       case Some(_) => {
         val v = result.get
