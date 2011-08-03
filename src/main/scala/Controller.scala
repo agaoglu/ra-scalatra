@@ -3,14 +3,18 @@ import scala.collection.mutable.Map
 import java.security.MessageDigest
 
 object Result {
-  var store = Map[String, (String, String, String, String)]()
+  val store = Map[String, (String, String, String, String)]()
 
   def of(id:String, passwd:String) = {
-    render(store(id), passwd)
+    val data = store.get(id)
+    data match {
+      case Some(_) => render(data.get, id)
+      case _ => None
+    }
   }
   
   def render(data: (String,String,String,String), passwd: String) =
-    if (data._2 == md5(passwd)) Some((data._1, data._3),List.fromString(data._4, '|')) else None
+    if (data._2 == md5(passwd)) Some((data._1, data._3), List.fromString(data._4, '|')) else None
   
   def preload() {
     println("Loading db into mem")
