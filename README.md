@@ -6,10 +6,10 @@ A simple web application to be used as a tool to announce the results of an exam
 Building
 --------
 
-You will need [sbt](https://github.com/harrah/xsbt/) installed to build the project. After cloning `cd` into the project and
+You will need [sbt](https://github.com/harrah/xsbt/) and a [redis](http://redis.io/) installed to build the project. After cloning `cd` into the project and
 
     sbt
     update
     jetty-run
 
-This will let you access the login screen. From there you can access the sample data defined in file `db`. It will be loaded on app initialization.
+This will let you access the login screen. From there you can access the sample data defined in file `db`. It will be loaded into default local redis on app initialization.
