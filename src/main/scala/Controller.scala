@@ -1,27 +1,26 @@
-import scala.collection.mutable.Map
+import com.redis._
 
 import java.security.MessageDigest
 
 object Result {
-  val store = Map[String, (String, String, String, String)]()
+  val host = "localhost"
+  val port = 6379
 
   def of(id:String, passwd:String) = {
-    val data = store.get(id)
-    data match {
-      case Some(_) => render(data.get, id)
-      case _ => None
-    }
+    val r = new RedisClient(host, port)
+    render(r.lrange[String](id, 0, 3).get, passwd)
   }
   
-  def render(data: (String,String,String,String), passwd: String) =
-    if (data._2 == md5(passwd)) Some((data._1, data._3), List.fromString(data._4, '|')) else None
+  def render(data: List[Option[String]], passwd: String) =
+    if (data(1).get == md5(passwd)) Some(((data(0).get, data(2).get), data(3).get.split('|').toList)) else None
   
   def preload() {
-    println("Loading db into mem")
+    val r = new RedisClient(host, port)
+    println("Loading db into redis")
     for {
         l <- scala.io.Source.fromFile("db").getLines(); 
         val p = l.split(",").toList}
-      store += p(0) -> (p(0), p(1), p(2), p(3))
+      p.foreach(r.rpush(p(0),_))
     println("Loading - done")
   }
 
