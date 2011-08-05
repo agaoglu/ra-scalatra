@@ -1,27 +1,25 @@
-import scala.collection.mutable.Map
+import voldemort.client._
 
 import java.security.MessageDigest
 
 object Result {
-  val store = Map[String, (String, String, String, String)]()
+  
+  val url = "tcp://localhost:6666"
+  val v = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(url)).getStoreClient[String, String]("test")
 
   def of(id:String, passwd:String) = {
-    val data = store.get(id)
-    data match {
-      case Some(_) => render(data.get, id)
-      case _ => None
-    }
+    render(v.get(id).getValue.split(',').toList, passwd)
   }
   
-  def render(data: (String,String,String,String), passwd: String) =
-    if (data._2 == md5(passwd)) Some((data._1, data._3), List.fromString(data._4, '|')) else None
+  def render(data: List[String], passwd: String) =
+    if (data(1) == md5(passwd)) Some(((data(0), data(2)), data(3).split('|').toList)) else None
   
   def preload() {
-    println("Loading db into mem")
+    println("Loading db into voldemort")
     for {
         l <- scala.io.Source.fromFile("db").getLines(); 
         val p = l.split(",").toList}
-      store += p(0) -> (p(0), p(1), p(2), p(3))
+      v.put(p(0), l)
     println("Loading - done")
   }
 
