@@ -1,14 +1,18 @@
-import scala.collection.mutable.Map
+import com.mongodb.casbah.Imports._
 
 import java.security.MessageDigest
 
 object Result {
-  val store = Map[String, (String, String, String, String)]()
+  val mongo = MongoConnection()("test")
+  val mongoColl = mongo("ra")
 
   def of(id:String, passwd:String) = {
-    val data = store.get(id)
+    val data = mongoColl.findOneByID(id)
     data match {
-      case Some(_) => render(data.get, id)
+      case Some(_) => { 
+        val d = data.get
+        render((d("_id").toString, d("p").toString, d("n").toString, d("r").toString), passwd)
+      }
       case _ => None
     }
   }
@@ -18,10 +22,16 @@ object Result {
   
   def preload() {
     println("Loading db into mem")
+    mongoColl.drop()
     for {
         l <- scala.io.Source.fromFile("db").getLines(); 
-        val p = l.split(",").toList}
-      store += p(0) -> (p(0), p(1), p(2), p(3))
+        val p = l.split(",").toList;
+        val mo = MongoDBObject(
+          "_id" -> p(0), 
+          "p" -> p(1),
+          "n" -> p(2),
+          "r" -> p(3))}
+      mongoColl.insert(mo)
     println("Loading - done")
   }
 
