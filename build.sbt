@@ -4,12 +4,12 @@ name := "ss"
 
 version := "1.0"
 
-scalaVersion := "2.9.0"
+scalaVersion := "2.9.0-1"
 
 seq(webSettings :_*)
 
 libraryDependencies ++= Seq(
-  "net.debasishg" %% "redisclient" % "2.3.1",
+  "net.debasishg" %% "redisclient" % "2.3.2",
   "org.scalatra" %% "scalatra" % "2.0.0-SNAPSHOT",
   "org.scalatra" %% "scalatra-scalate" % "2.0.0-SNAPSHOT",
   "org.mortbay.jetty" % "jetty" % "6.1.22" % "jetty",
