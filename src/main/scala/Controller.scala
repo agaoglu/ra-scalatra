@@ -10,7 +10,7 @@ object Result {
     db withSession {
       val q = for (e <- Results if e.id === id) yield e
       val data = q.first
-      if (data._3 == md5(passwd)) Some((data._1, data._2),List.fromString(data._4, '|')) else None
+      if (data._2 == md5(passwd)) Some((data._1, data._3),List.fromString(data._4, '|')) else None
     }
   }
 
@@ -22,23 +22,10 @@ object Result {
 }
 
 object Run {
-  //val db = Database.forURL("jdbc:h2:mem:test1;DB_CLOSE_DELAY=-1", driver = "org.h2.Driver")
   val db = Database.forURL("jdbc:mysql:///ss?user=root", driver = "com.mysql.jdbc.Driver")
   def main(args:Array[String]) {
-    println (Result of("1005918", "1005918"))
-    /*
     db withSession {
       (Results.ddl) create
     }
-    Result of("1005918", "1005918") match {
-      case Some(_) => println("found")
-      case _ => println("not found")
-    }
-    val q1 = for(u <- Results) yield u
-    db withSession {
-      //Results insert ("123", "Erdem", "R")
-      println(q1.first)
-    }
-    */
   }
 }
