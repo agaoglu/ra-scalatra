@@ -3,20 +3,18 @@
 -@ val formErr:String = ""
 
 p Please enter your identification number and password
-form#query(onsubmit="sb()" method="post")
+form#query(method="post" onsubmit="sb()")
   table(border="0" cellpadding="3" cellspacing="0")
     tr
       th
         label(for="idn") ID Number
       td
         input#idn(type="text")
-      td.err= idnErr
     tr
       th
         label(for="pass") Password
       td
-        input#pass(type="password" name="pass")
-      td.err= passErr
+        input#pass(name="pass" type="password")
   p
     input(type="submit")
   p.err= formErr

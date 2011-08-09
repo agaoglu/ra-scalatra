@@ -5,7 +5,7 @@ import org.scalaquery.ql.extended.MySQLDriver.Implicit._
 import java.security.MessageDigest
 
 object Result {
-  val db = Database.forURL("jdbc:mysql:///ss?user=root", driver = "com.mysql.jdbc.Driver")
+  val db = Database.forURL(Conf.url, driver=Conf.driver, user=Conf.user, password=Conf.password)
   def of(id:String, passwd:String) = {
     db withSession {
       val q = for (e <- Results if e.id === id) yield e
@@ -22,9 +22,8 @@ object Result {
 }
 
 object Run {
-  val db = Database.forURL("jdbc:mysql:///ss?user=root", driver = "com.mysql.jdbc.Driver")
   def main(args:Array[String]) {
-    db withSession {
+    Result.db withSession {
       (Results.ddl) create
     }
   }
