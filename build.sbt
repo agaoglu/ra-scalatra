@@ -6,7 +6,7 @@ version := "1.0"
 
 scalaVersion := "2.9.0"
 
-seq(WebPlugin.webSettings :_*)
+seq(webSettings :_*)
 
 libraryDependencies ++= Seq(
   "org.scalaquery" %% "scalaquery" % "0.9.4",
